@@ -1,15 +1,14 @@
 package com.example.gestao_vagas.Models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @EqualsAndHashCode
@@ -17,19 +16,18 @@ import java.util.UUID;
 @Table(name = "candidate")
 public class Candidate {
 
-    @GeneratedValue(generator = "UUID",strategy = jakarta.persistence.GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Id
     private UUID id;
 
     private String name;
-    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Username must contain only letters and numbers")
     private String username;
-
-    @Email(message = "Email should be valid")
     private String email;
-    @Length(min = 8, message = "Password must have at least 8 characters")
     private String pswd;
     private String curriculum;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     public Candidate() {
     }
@@ -40,6 +38,14 @@ public class Candidate {
         this.email = email;
         this.pswd = pswd;
         this.curriculum = curriculum;
+    }
+
+    public Candidate(CandidateRequestDTO candidate) {
+        this.name = candidate.name();
+        this.username = candidate.username();
+        this.email = candidate.email();
+        this.pswd = candidate.pswd();
+        this.curriculum = candidate.curriculum();
     }
 
     public UUID getId() {
