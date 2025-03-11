@@ -26,14 +26,14 @@ public class CandidateService {
     }
 
     public void createCandidate(CandidateRequestDTO dto) {
-        VerifyUserAlreadyExists(dto, this.candidateReposiotry);
+        VerifyUserAlreadyExists(dto);
         Candidate candidate = new Candidate(dto);
         candidateReposiotry.save(candidate);
         System.out.println("Candidate created");
     }
 
-    public static void VerifyUserAlreadyExists(@RequestBody @Valid CandidateRequestDTO dto, CandidateReposiotry candidateReposiotry) {
-        Optional<Candidate> candidateOptional = candidateReposiotry.findByUsernameOrEmail(dto.email(), dto.username());
+    public void VerifyUserAlreadyExists(@RequestBody @Valid CandidateRequestDTO dto) {
+        Optional<Candidate> candidateOptional = this.candidateReposiotry.findByUsernameOrEmail(dto.username(), dto.email());
         if (candidateOptional.isPresent()) {
             throw new RuntimeException("Username or email already in use");
         }
