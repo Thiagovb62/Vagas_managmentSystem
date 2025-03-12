@@ -8,9 +8,9 @@ public record JobsResponseDTO(
         String description,
         String benefits,
         String level,
-        Company company
+        CompanyResponseDTO company
 ) {
     public JobsResponseDTO(Jobs jobs) {
-        this(jobs.getId(), jobs.getTitle(), jobs.getDescription(), jobs.getBenefits(), jobs.getLevel(), jobs.getCompany());
+        this(jobs.getId(), jobs.getTitle(), jobs.getDescription(), jobs.getBenefits(), jobs.getLevel(), new CompanyResponseDTO(jobs.getCompany()));
     }
 }

@@ -44,7 +44,6 @@ public class Jobs {
         this.description = jobs.description();
         this.benefits = jobs.benefits();
         this.level = jobs.level();
-        this.company = jobs.company();
     }
 
     public UUID getId() {
