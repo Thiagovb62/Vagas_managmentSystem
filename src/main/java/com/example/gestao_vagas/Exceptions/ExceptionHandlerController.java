@@ -35,14 +35,19 @@ public class ExceptionHandlerController extends RuntimeException {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+
     @ExceptionHandler(NullPointerException.class)
-    public String handleNullPointerException(NullPointerException e) {
-        return e.getMessage();
+    public ResponseEntity handleNullPointerException(NullPointerException e) {
+        return buildErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public String CompanyExistsException(IllegalArgumentException e) {
-        return e.getMessage();
+    public ResponseEntity handleIllegalArgumentException(IllegalArgumentException e) {
+        return buildErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
+    private ResponseEntity buildErrorResponse(String message, HttpStatus httpStatus) {
+        ErrorMessageDTO errorMessage = new ErrorMessageDTO("error", message);
+        return new ResponseEntity<>(errorMessage, httpStatus);
     }
 }
