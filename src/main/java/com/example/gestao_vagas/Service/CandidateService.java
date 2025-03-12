@@ -4,9 +4,7 @@ import com.example.gestao_vagas.Models.Candidate;
 import com.example.gestao_vagas.Models.CandidateRequestDTO;
 import com.example.gestao_vagas.Models.CandidateResponseDTO;
 import com.example.gestao_vagas.Repository.CandidateReposiotry;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +30,7 @@ public class CandidateService {
         System.out.println("Candidate created");
     }
 
-    public void VerifyUserAlreadyExists(@RequestBody @Valid CandidateRequestDTO dto) {
+    public void VerifyUserAlreadyExists(CandidateRequestDTO dto) {
         Optional<Candidate> candidateOptional = this.candidateReposiotry.findByUsernameOrEmail(dto.username(), dto.email());
         if (candidateOptional.isPresent()) {
             throw new RuntimeException("Username or email already in use");
