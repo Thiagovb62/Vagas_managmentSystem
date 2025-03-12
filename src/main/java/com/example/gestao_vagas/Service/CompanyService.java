@@ -26,6 +26,15 @@ public class CompanyService {
         return ResponseEntity.ok(CompanyResponseDTO.convert(companies));
     }
 
+    public Company getCompanyByName(String name) {
+        Optional<Company> companyOptional = this.companyRepository.findByName(name);
+        if (companyOptional.isEmpty()) {
+            throw new NullPointerException("Company not found");
+        }
+        return companyOptional.get();
+    }
+
+
     public ResponseEntity<CompanyResponseDTO> getCompanyByUsernameOrEmail(String username, String email) {
         System.out.println("username: " + username);
 
