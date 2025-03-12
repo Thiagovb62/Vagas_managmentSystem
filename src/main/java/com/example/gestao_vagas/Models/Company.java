@@ -1,8 +1,6 @@
 package com.example.gestao_vagas.Models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -17,6 +15,7 @@ public class Company {
     private UUID id;
 
     private String name;
+    private String username;
     private String email;
     private String pswd;
     private String website;
@@ -28,8 +27,9 @@ public class Company {
     public Company() {
     }
 
-    public Company(String name, String email, String pswd, String website, String description) {
+    public Company(String name, String username,String email, String pswd, String website, String description) {
         this.name = name;
+        this.username = username;
         this.email = email;
         this.pswd = pswd;
         this.website = website;
@@ -38,10 +38,19 @@ public class Company {
 
     public Company(CompanyRequestDTO company) {
         this.name = company.name();
+        this.username = company.username();
         this.email = company.email();
         this.pswd = company.pswd();
         this.website = company.website();
         this.description = company.description();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public UUID getId() {

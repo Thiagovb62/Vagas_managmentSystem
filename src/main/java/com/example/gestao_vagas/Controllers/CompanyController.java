@@ -7,6 +7,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/company")
 public class CompanyController {
@@ -17,9 +20,14 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<CompanyResponseDTO>> getAllCompanies() {
+        return companyService.getAllCompanies();
+    }
+
     @GetMapping
-    public ResponseEntity<CompanyResponseDTO> getCompanyById(String name) {
-        return companyService.getCompanyByName(name);
+    public ResponseEntity<CompanyResponseDTO> getCompanyByUsernameOrEmail(@RequestBody CompanyRequestDTO dto) {
+        return companyService.getCompanyByUsernameOrEmail(dto.username(), dto.email());
     }
 
     @PostMapping

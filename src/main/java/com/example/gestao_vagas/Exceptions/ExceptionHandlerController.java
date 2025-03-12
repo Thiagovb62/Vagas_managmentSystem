@@ -34,4 +34,15 @@ public class ExceptionHandlerController extends RuntimeException {
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(NullPointerException.class)
+    public String handleNullPointerException(NullPointerException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String CompanyExistsException(IllegalArgumentException e) {
+        return e.getMessage();
+
+    }
 }
