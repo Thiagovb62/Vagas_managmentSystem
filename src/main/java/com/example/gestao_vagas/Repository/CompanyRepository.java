@@ -9,5 +9,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
     Optional<Company> findByUsernameOrEmail(String username, String email);
 
+    Company findByUsername(String username);
+
     Optional<Company> findByName(String name);
 }

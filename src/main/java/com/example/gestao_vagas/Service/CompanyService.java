@@ -6,6 +6,7 @@ import com.example.gestao_vagas.Models.CompanyRequestDTO;
 import com.example.gestao_vagas.Models.CompanyResponseDTO;
 import com.example.gestao_vagas.Repository.CompanyRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +17,12 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
+    private final PasswordEncoder encoder;
 
-    public CompanyService(CompanyRepository companyRepository) {
+
+    public CompanyService(CompanyRepository companyRepository, PasswordEncoder encoder) {
         this.companyRepository = companyRepository;
+        this.encoder = encoder;
     }
 
     public ResponseEntity<List<CompanyResponseDTO>> getAllCompanies() {
@@ -51,6 +55,8 @@ public class CompanyService {
     public ResponseEntity<CompanyResponseDTO> createCompany(CompanyRequestDTO dto) {
         VerifyCompanyAlreadyExists(dto);
         Company company = new Company(dto);
+        var password = encoder.encode(dto.pswd());
+        company.setPswd(password);
         companyRepository.save(company);
         return ResponseEntity.ok(new CompanyResponseDTO(company));
     }
